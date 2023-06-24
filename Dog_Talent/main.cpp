@@ -1,6 +1,5 @@
 #include <iostream>
 #include <vector>
-#include <string>
 
 // Abstract Talent class
 class Talent {
@@ -13,6 +12,13 @@ class Swimming : public Talent {
 public:
     std::string getAbility() const override {
         return "Swim";
+    }
+};
+
+class Eating : public Talent {
+public:
+    std::string getAbility() const override {
+        return "Eat";
     }
 };
 
@@ -58,12 +64,19 @@ public:
             std::cout << "\tIt can \"" << talent->getAbility() << "\"" << std::endl;
         }
     }
+
+    ~Dog() {
+        for (Talent* talent : talents) {
+            delete talent;
+        }
+    }
 };
 
 int main() {
     Dog dog1("Steve");
 
     Talent* dance = new Dancing();
+    Talent* eating = new Eating();
     Talent* swim = new Swimming();
     Talent* counting = new Counting();
     Talent* computing = new Computing();
@@ -72,12 +85,11 @@ int main() {
     dog1.addTalent(swim);
     dog1.addTalent(counting); //My own skill
     dog1.addTalent(computing); //Another one :)
+    dog1.addTalent(eating);
 
 
     dog1.show_talents();
-
-    delete dance;
-    delete swim;
+    
 
     return 0;
 }
